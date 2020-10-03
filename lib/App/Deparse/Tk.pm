@@ -21,14 +21,12 @@ for (my $j=0, $j<3, ++$j) {
 }
 };
 
+my @flags = ('d', 'p', 'q', 'l');
+
 sub new {
     my ($class) = @_;
     my $self = bless {}, $class;
 
-
-    $self->{d_flag} = 0;
-    $self->{p_flag} = 0;
-    $self->{q_flag} = 0;
     $self->{top} = MainWindow->new(
         -title => 'B::Deparse',
     );
@@ -49,7 +47,9 @@ sub create_app {
     );
     $self->{incode}->pack(-fill => 'both', -expand => 1);
 
-    for my $flag ('d', 'p', 'q') {
+    for my $flag (@flags) {
+        $self->{"${flag}_flag"} = 0;
+
         $self->{"${flag}_flag_checkbox"} = $self->{top}->Checkbutton(
         -text     => "-$flag",
         -variable => \$self->{"${flag}_flag"},
