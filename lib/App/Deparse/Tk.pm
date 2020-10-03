@@ -7,15 +7,35 @@ use Path::Tiny qw(path);
 
 use Tk;
 
+our $VERSION = '0.01';
+
+# TODO make fonts more readable
+# TODO make it clear what is the input window and what is the output window
+# TODO Clear the output when we change the input (or maybe rerun the deparse process?)
+# TODO make the output window read-only
+
+my $sample = q{
+# Paste your code in the top window and click the Deparse button to see what B::Deparse thinks about it
+for (my $j=0, $j<3, ++$j) {
+    print $j;
+}
+};
+
 sub new {
     my ($class) = @_;
     my $self = bless {}, $class;
 
+
+    $self->{d_flag} = 0;
+    $self->{p_flag} = 0;
+    $self->{q_flag} = 0;
     $self->{top} = MainWindow->new(
         -title => 'B::Deparse',
     );
     #$self->create_menu;
     $self->create_app;
+    $self->{incode}->insert("0.0", $sample);
+    $self->deparse;
 
     return $self;
 }
@@ -24,10 +44,20 @@ sub create_app {
     my ($self) = @_;
     $self->{incode} = $self->{top}->Text(
         -state => 'normal',
-        -font => ['fixed', 12],
+        -font  => ['Curier', 12],
+        -bg    => 'white',
     );
     $self->{incode}->pack(-fill => 'both', -expand => 1);
 
+    for my $flag ('d', 'p', 'q') {
+        $self->{"${flag}_flag_checkbox"} = $self->{top}->Checkbutton(
+        -text     => "-$flag",
+        -variable => \$self->{"${flag}_flag"},
+        -font     => ['fixed', 10],
+        -command  => sub { $self->deparse },
+        );
+        $self->{"${flag}_flag_checkbox"}->pack(-side => 'top');
+    }
 
     $self->{outcode} = $self->{top}->Text(
         -state => 'normal',
@@ -51,7 +81,19 @@ sub deparse {
     path($temp)->spew($code);
     # TODO: handle STDERR
     # TODO: handle exit code
-    my $out = qx{perl -MO=Deparse $temp};
+        
+    my $cmd = 'perl -MO=Deparse';
+    if ($self->{d_flag}) {
+        $cmd .= ',-d'
+    }
+    if ($self->{p_flag}) {
+        $cmd .= ',-p'
+    }
+    if ($self->{q_flag}) {
+        $cmd .= ',-q'
+    }
+
+    my $out = qx{$cmd $temp};
     # TODO: save to file, run deparse on it, get the output and paste it in the same window (or maybe another window?)
     $self->{outcode}->delete("0.0", 'end');
     $self->{outcode}->insert("0.0", $out);
