@@ -21,7 +21,7 @@ for (my $j=0, $j<3, ++$j) {
 }
 };
 
-my @flags = ('d', 'p', 'q', 'l');
+my @flags = ('d', 'p', 'q', 'l', 'P');
 
 sub new {
     my ($class) = @_;
@@ -47,16 +47,18 @@ sub create_app {
     );
     $self->{incode}->pack(-fill => 'both', -expand => 1);
 
+    $self->{flags} = $self->{top}->Frame();
+    $self->{flags}->pack(-side => 'top');
     for my $flag (@flags) {
         $self->{"${flag}_flag"} = 0;
 
-        $self->{"${flag}_flag_checkbox"} = $self->{top}->Checkbutton(
+        $self->{"${flag}_flag_checkbox"} = $self->{flags}->Checkbutton(
         -text     => "-$flag",
         -variable => \$self->{"${flag}_flag"},
         -font     => ['fixed', 10],
         -command  => sub { $self->deparse },
         );
-        $self->{"${flag}_flag_checkbox"}->pack(-side => 'top');
+        $self->{"${flag}_flag_checkbox"}->pack(-side => 'left');
     }
 
     $self->{outcode} = $self->{top}->Text(
