@@ -1,0 +1,10 @@
+*.swp
+*.gz
+App-Tk-Deparse-*
+MANIFEST
+MYMETA.json
+MYMETA.yml
+Makefile
+MANIFEST.bak
+blib/
+pm_to_blib
