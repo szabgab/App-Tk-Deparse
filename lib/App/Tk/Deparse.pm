@@ -106,7 +106,7 @@ sub show_about {
          Perl $]<br>
          <p>
          Create by Gabor Szabo<br>
-         Source code on <a href="https://github.com/szabgab/App-PerlTidy-Tk">GitHub</a><br>
+         Source code on <a href="https://github.com/szabgab/App-Tk-Deparse">GitHub</a><br>
          Thanks to my <a href="https://www.patreon.com/szabgab">Patreon</a> supporters<br>
 
 <h2>Supporters</h2>
