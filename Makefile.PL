@@ -16,6 +16,7 @@ WriteMakefile(
         'Cpanel::JSON::XS' => 0,
         'File::HomeDir' => 0,
         'Path::Tiny'    => 0,
+        'Capture::Tiny' => 0,
         'Tk'            => 0,
         'Tk::HyperText' => 0,
 

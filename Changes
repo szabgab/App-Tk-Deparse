@@ -1,6 +1,7 @@
 
 0.02 2020.10.XX
     - Fix link to repository in about box.
+    - If there is a syntax error in the Perl code it is now reported in the output window in red.
 
 0.01 2020.10.17
     - Initial release

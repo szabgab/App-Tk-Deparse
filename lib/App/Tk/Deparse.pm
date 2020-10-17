@@ -5,6 +5,7 @@ use 5.008;
 
 use Browser::Open qw(open_browser open_browser_cmd);
 use Path::Tiny qw(path);
+use Capture::Tiny qw(capture);
 
 use Tk;
 use Tk::Dialog;
@@ -235,12 +236,16 @@ sub deparse {
         $cmd .= ",-s$self->{s_flag}"
     }
 
-    # TODO: handle STDERR
-    # TODO: handle exit code
-    my $out = qx{$cmd $temp};
+    my ($stdout, $stderr, $exit) = capture { system("$cmd $temp"); };
     $self->{outcode}->configure('state' => 'normal');
     $self->{outcode}->delete("0.0", 'end');
-    $self->{outcode}->insert("0.0", $out);
+    if ($exit) {
+        $self->{outcode}->configure('fg' => 'red');
+        $self->{outcode}->insert("0.0", $stderr);
+    } else {
+        $self->{outcode}->configure('fg' => 'black');
+        $self->{outcode}->insert("0.0", $stdout);
+    }
     $self->{outcode}->configure('state' => 'disabled');
 }
 
