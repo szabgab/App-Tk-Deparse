@@ -264,3 +264,40 @@ sub exit_app {
 }
 
 1;
+
+=head1 NAME
+
+App::Tk::Deparse - Tk based GUI to experiment with B::Deparse
+
+=head1 SYNOPSIS
+
+    perl-deparse
+
+=head1 DESCRIPTION
+
+This is a GUI program. There are some videos on L<Perl Maven Tk|https://perlmaven.com/tk> explaining
+how does this work and how was this built.
+
+When the application exits we save the current window size in the config file and next time we use that size to open the application.
+
+    ~/.perl-tk-deparse.json
+
+=head1 SEE ALSO
+
+L<B::Deparse>
+
+L<Tk>
+
+L<Tk::HyperText>
+
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2020 by L<Gabor Szabo|https://szabgab.com/>
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself, either Perl version 5.26.1 or,
+at your option, any later version of Perl 5 you may have available.
+
+=cut
+
