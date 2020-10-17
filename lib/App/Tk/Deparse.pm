@@ -1,4 +1,4 @@
-package App::Deparse::Tk;
+package App::Tk::Deparse;
 use strict;
 use warnings;
 use 5.008;
@@ -146,7 +146,7 @@ sub create_app {
     my ($self) = @_;
     $self->{incode} = $self->{top}->Text(
         -state => 'normal',
-        -font  => ['Curier', 12],
+        -font  => ['fixed', 12],
         -bg    => 'white',
     );
     $self->{incode}->pack(-fill => 'both', -expand => 1);
@@ -206,7 +206,7 @@ sub deparse {
         }
     }
     if ($self->{s_flag}) {
-        $cmd .= "-s$self->{s_flag}"
+        $cmd .= ",-s$self->{s_flag}"
     }
 
     # TODO: handle STDERR
