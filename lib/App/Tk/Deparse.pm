@@ -17,15 +17,41 @@ our $VERSION = '0.01';
 # TODO: Clear the output when we change the input (or maybe rerun the deparse process?)
 # TODO: use nice temporary filename as we can see the name of the file with the -l flags
 # TODO: Save window size upon exit; restore window size upon start
+# TODO: If there is a syntax error in the code B::Deparse will fail. We sould display this.
+
 
 my $sample = q{
 # Paste your code in the top window and click the Deparse button to see what B::Deparse thinks about it
 for (my $j=0, $j<3, ++$j) {
     print $j;
 }
+
+my $pi = 3.14;      # -d changes this to a string
+my $answer = "42";  # single quote or no quote?
+
+my @planets = ('Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn');
+
+my %h = (
+name => "Foo Bar",
+age => 42,
+fruits => qw(Apple Banana Peach),
+);
+
+
+my $gentlemen = "Some names";
+my $me = 'Perl';
+
+print "Hello, $pi, @ladies, \u$gentlemen\E, \u\L$me!";
+
+# Trying to show -P without success
+sub foo (\@) { 1 } foo @x
 };
 
-my @flags = ('d', 'p', 'q', 'l', 'P');
+my $s = q{
+};
+
+# Removed l for now showing the temporary filename does not do much good.
+my @flags = ('d', 'p', 'q', 'P');
 
 sub new {
     my ($class) = @_;
@@ -165,17 +191,17 @@ sub create_app {
         );
         $self->{"${flag}_flag_checkbox"}->pack(-side => 'left');
     }
-    $self->{"s_flag"} = '';
-    my @s_values = qw(C i T);
-    $self->{"s_flag_widget"} = $self->{flags}->BrowseEntry(
-        -label => "-s",
-        -width => 3,
-        -variable => \$self->{"s_flag"},
-    );
-    for my $s (@s_values) {
-        $self->{"s_flag_widget"}->insert("end", $s);
-    }
-    $self->{"s_flag_widget"}->pack;
+    # $self->{"s_flag"} = '';
+    # my @s_values = qw(C i T);
+    # $self->{"s_flag_widget"} = $self->{flags}->BrowseEntry(
+    #     -label => "-s",
+    #     -width => 3,
+    #     -variable => \$self->{"s_flag"},
+    # );
+    # for my $s (@s_values) {
+    #     $self->{"s_flag_widget"}->insert("end", $s);
+    # }
+    # $self->{"s_flag_widget"}->pack;
 
     $self->{outcode} = $self->{top}->Text(
         -state => 'disabled',
