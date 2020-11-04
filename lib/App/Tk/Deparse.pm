@@ -168,6 +168,12 @@ sub onResource {
     }
 }
 
+sub changed {
+    my ($self, $event) = @_;
+    # TODO can we delay this and only run the deparse process if there were no changes for some time (e.g. 1 sec)
+    $self->deparse;
+    #print("changed\n");
+}
 
 sub create_app {
     my ($self) = @_;
@@ -176,6 +182,9 @@ sub create_app {
         -font  => ['fixed', 12],
         -bg    => 'white',
     );
+    $self->{incode}->bindtags([$self->{incode}, 'Tk::Text', $self->{top}, 'all']);
+    #$self->{incode}->bind('<<Modified>>' => sub { I could not get this working
+    $self->{incode}->bind('<Any-KeyPress>' => sub { $self->changed(shift); });
     $self->{incode}->pack(-fill => 'both', -expand => 1);
 
     $self->{flags} = $self->{top}->Frame();
