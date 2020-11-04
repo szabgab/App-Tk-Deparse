@@ -30,7 +30,7 @@ WriteMakefile(
              repository => {
                  type => 'git',
                  url  => 'https://github.com/szabgab/App-Tk-Deparse.git',
-                 web  => 'https://github.com/szabgab/App-Tk-Deparse.com',
+                 web  => 'https://github.com/szabgab/App-Tk-Deparse',
              },
              bugtracker => {web => 'https://github.com/szabgab/App-Tk-Deparse/issues'},
              homepage   => 'https://perlmaven.com/tk',
