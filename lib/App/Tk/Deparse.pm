@@ -12,7 +12,7 @@ use Tk::Dialog;
 use Tk::HyperText;
 use Tk::BrowseEntry;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 # TODO: make fonts more readable
 # TODO: Clear the output when we change the input (or maybe rerun the deparse process?)
